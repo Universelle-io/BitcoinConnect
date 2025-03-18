@@ -35,6 +35,15 @@ export interface OKXSignPsbtRequestParams {
 	toSignInputs?: InputToSign[];
 }
 
+export interface TapWalletSignPsbtRequestParams {
+	autoFinalized?: boolean;
+	toSignInputs?: InputToSign[];
+}
+
+export interface UnisatSignPsbtRequestParams {
+	autoFinalized?: boolean;
+	toSignInputs?: InputToSign[];
+}
 
 export interface OKXProvider {
 	bitcoin: {
@@ -42,4 +51,18 @@ export interface OKXProvider {
 		signMessage: (msg: string) => Promise<string>;
 		signPsbt: (psbt: string, options?: SignPSBTOptions) => Promise<string>;
 	}
+}
+
+export interface TapWalletProvider {
+	requestAccounts: () => Promise<string[]>;
+	getPublicKey: () => Promise<string>;
+	signMessage: (msg: string) => Promise<string>;
+	signPsbt: (psbt: string, options?: SignPSBTOptions) => Promise<string>;
+}
+
+export interface UnisatProvider {
+	requestAccounts: () => Promise<string[]>;
+	getPublicKey: () => Promise<string>;
+	signMessage: (msg: string) => Promise<string>;
+	signPsbt: (psbt: string, options?: SignPSBTOptions) => Promise<string>;
 }

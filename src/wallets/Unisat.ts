@@ -1,65 +1,65 @@
-// src/providers/UnisatProvider.ts
 
-import type { ConnectWalletReturn } from "./index.ts";
+import { bitcoinsdk } from "bitcoinsdk/core";
+import type { SignPSBTOptions, UnisatSignPsbtRequestParams, ConnectWalletReturn, UnisatProvider } from "../types/index.d.ts";
 
-export const connectWallet = async (): Promise<ConnectWalletReturn | null> => {
-  if (typeof globalThis !== "undefined" && globalThis.unisat) {
-    try {
-      const accounts = await globalThis.unisat.requestAccounts();
-      const address = accounts[0];
-      const publicKey = await globalThis.unisat.getPublicKey()
-      return { address, publicKey }
-    } catch (error) {
-      console.error("Error connecting to Unisat Wallet:", error);
-      return null;
-    }
-  } else {
-    throw new Error("Unisat Wallet not installed");
+class UnisatWallet {
+  private readonly provider: UnisatProvider | undefined;
+  label = "Unisat";
+  icon = "https://openbook.0.srcpad.pro/static/assets/unisat.png";
+
+  constructor() {
+    this.provider = (globalThis).unisat as UnisatProvider;
   }
-};
 
-export const signMessage = async (message: string) => {
-  const unisat = globalThis.unisat;
-  const signature = await unisat.signMessage(message);
-  return signature;
-}
-
-
-
-export const signPSBT = async (
-  psbt: string,
-  options: signPSBTOptions): Promise<string | null> => {
-  if (typeof globalThis !== "undefined" && globalThis.unisat) {
-    try {
-      if (options) {
-        const opt = {};
-        console.log(options)
-        if ("autoFinalized" in options) opt.autoFinalized = options.autoFinalized;
-        if ("inputsToSign" in options) opt.toSignInputs = options.inputsToSign;
-        const signedPsbt = await globalThis.unisat.signPsbt(psbt, opt);
-        return signedPsbt;
+  public async connectWallet(): Promise<ConnectWalletReturn | null> {
+    if (typeof globalThis !== "undefined" && this.provider) {
+      try {
+        const accounts = await this.provider.requestAccounts();
+        const address = accounts[0];
+        const publicKey = await this.provider.getPublicKey()
+        return { address, publicKey }
+      } catch (error) {
+        console.error("Error connecting to Unisat Wallet:", error);
+        return null;
       }
-      const signedPsbt = await globalThis.unisat.signPsbt(psbt);
-      return signedPsbt;
-    } catch (error) {
-      console.error("Error signing PSBT with Unisat Wallet:", error);
-      return null;
+    } else {
+      throw new Error("Unisat Wallet not installed");
     }
-  } else {
-    throw new Error("Unisat Wallet not installed");
   }
-};
 
-export const pushTX = async (txHex: string): Promise<string | null> => {
-  if (typeof globalThis !== "undefined" && globalThis.unisat) {
-    try {
-      const txId = await globalThis.unisat.pushPsbt(txHex);
-      return txId;
-    } catch (error) {
-      console.error("Error pushing TX with Unisat Wallet:", error);
-      return null;
+  public async signMessage(message: string): Promise<string> {
+    if (typeof globalThis !== "undefined" && this.provider) {
+      const signature = await this.provider.signMessage(message);
+      return signature;
     }
-  } else {
     throw new Error("Unisat Wallet not installed");
   }
-};
+
+  public async signPSBT(
+    psbt: string,
+    options: SignPSBTOptions,
+  ): Promise<string | null> {
+    if (typeof globalThis !== "undefined" && this.provider) {
+      try {
+        if (options) {
+          const opt: UnisatSignPsbtRequestParams = {};
+          if ("autoFinalized" in options) opt.autoFinalized = options.autoFinalized;
+          if ("inputsToSign" in options) opt.toSignInputs = options.inputsToSign;
+          const signedPsbt = await this.provider.signPsbt(psbt, opt);
+          return signedPsbt;
+        }
+        const signedPsbt = await this.provider.signPsbt(psbt);
+        return signedPsbt;
+      } catch (error) {
+        console.error("Error signing PSBT with Unisat Wallet:", error);
+        return null;
+      }
+    } else {
+      throw new Error("Unisat Wallet not installed");
+    }
+  }
+
+  public async pushTX(txHex: string) {
+    return await bitcoinsdk.bitcoin.sendRawTransaction({ txHex });
+  };
+}
