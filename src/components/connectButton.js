@@ -297,7 +297,7 @@ class BitcoinConnectButton extends HTMLElement {
   }
 }
 
-if (typeof window !== 'undefined' && !customElements.get('bitcoin-connect')) {
-  customElements.define('bitcoin-connect', BitcoinConnectButton);
+if (typeof window !== 'undefined' && !customElements.get('btc-wallet-connect')) {
+  customElements.define('btc-wallet-connect', BitcoinConnectButton);
 }
 export default BitcoinConnectButton;

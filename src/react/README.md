@@ -1,35 +1,35 @@
-# Componentes React para BitcoinConnect
+# React Components for BitcoinConnect
 
-Este directorio contiene componentes React que envuelven los web components de BitcoinConnect, permitiendo una integración más sencilla con aplicaciones React.
+This directory contains React components that wrap BitcoinConnect web components, allowing for easier integration with React applications.
 
 ## BitcoinConnectButton
 
-Un componente React que envuelve el web component `bitcoin-connect`.
+A React component that wraps the `bitcoin-connect` web component.
 
-### Instalación
+### Installation
 
 ```bash
-npm install bitcoinconnect
+npm install btc-wallet-connect
 ```
 
-### Uso básico
+### Basic Usage
 
 ```jsx
 import React from 'react';
-import { BitcoinConnectButton } from 'bitcoinconnect/react';
+import { BitcoinConnectButton } from 'btc-wallet-connect/react';
 
 function App() {
   return (
     <div>
-      <h1>Mi aplicación Bitcoin</h1>
+      <h1>My Bitcoin Application</h1>
       <BitcoinConnectButton 
-        button-text="Conectar Wallet"
+        button-text="Connect Wallet"
         theme="dark"
         onConnect={(provider, address) => {
-          console.log(`Conectado a ${provider} con dirección ${address}`);
+          console.log(`Connected to ${provider} with address ${address}`);
         }}
         onDisconnect={() => {
-          console.log('Wallet desconectada');
+          console.log('Wallet disconnected');
         }}
       />
     </div>
@@ -39,42 +39,42 @@ function App() {
 export default App;
 ```
 
-### Uso con Ref
+### Usage with Ref
 
 ```jsx
 import React, { useRef } from 'react';
-import { BitcoinConnectButton, BitcoinConnectButtonRef } from 'bitcoinconnect/react';
+import { BitcoinConnectButton, BitcoinConnectButtonRef } from 'btc-wallet-connect/react';
 
 function App() {
   const buttonRef = useRef<BitcoinConnectButtonRef>(null);
 
   const handleConnect = () => {
-    // Conectar a una wallet específica programáticamente
+    // Connect to a specific wallet programmatically
     buttonRef.current?.connectWallet('Leather');
   };
 
   const handleDisconnect = () => {
-    // Desconectar la wallet programáticamente
+    // Disconnect the wallet programmatically
     buttonRef.current?.disconnectWallet();
   };
 
   const getWalletInfo = () => {
-    // Obtener información de la wallet conectada
+    // Get information about the connected wallet
     const info = buttonRef.current?.getWalletInfo();
     console.log('Wallet info:', info);
   };
 
   return (
     <div>
-      <h1>Mi aplicación Bitcoin</h1>
+      <h1>My Bitcoin Application</h1>
       <BitcoinConnectButton 
         ref={buttonRef}
-        button-text="Conectar Wallet"
+        button-text="Connect Wallet"
         theme="dark"
       />
-      <button onClick={handleConnect}>Conectar a Leather</button>
-      <button onClick={handleDisconnect}>Desconectar</button>
-      <button onClick={getWalletInfo}>Obtener info</button>
+      <button onClick={handleConnect}>Connect to Leather</button>
+      <button onClick={handleDisconnect}>Disconnect</button>
+      <button onClick={getWalletInfo}>Get info</button>
     </div>
   );
 }
@@ -82,29 +82,29 @@ function App() {
 export default App;
 ```
 
-### Propiedades
+### Properties
 
-El componente acepta todas las propiedades del web component `bitcoin-connect`, además de:
+The component accepts all properties of the `bitcoin-connect` web component, plus:
 
-- `className`: Clase CSS para el componente
-- `style`: Estilos inline para el componente
-- `onConnect`: Callback llamado cuando se conecta una wallet
-- `onDisconnect`: Callback llamado cuando se desconecta una wallet
+- `className`: CSS class for the component
+- `style`: Inline styles for the component
+- `onConnect`: Callback called when a wallet is connected
+- `onDisconnect`: Callback called when a wallet is disconnected
 
-### Métodos (vía Ref)
+### Methods (via Ref)
 
-- `connectWallet(provider: string)`: Conecta a una wallet específica
-- `disconnectWallet()`: Desconecta la wallet actual
-- `getWalletInfo()`: Obtiene información sobre la wallet conectada
+- `connectWallet(provider: string)`: Connects to a specific wallet
+- `disconnectWallet()`: Disconnects the current wallet
+- `getWalletInfo()`: Gets information about the connected wallet
 
-### Personalización
+### Customization
 
 ```jsx
 <BitcoinConnectButton 
-  button-text="Conectar a Bitcoin"
-  connected-text="Wallet Conectada"
-  loading-text="Conectando..."
-  modal-title="Selecciona tu Wallet"
+  button-text="Connect to Bitcoin"
+  connected-text="Wallet Connected"
+  loading-text="Connecting..."
+  modal-title="Select your Wallet"
   theme="dark"
   show-address={true}
   show-provider={true}
@@ -115,4 +115,3 @@ El componente acepta todas las propiedades del web component `bitcoin-connect`, 
   wallet-info-bg="#f5f5f5"
   wallet-info-color="#333"
 />
-```

@@ -1,55 +1,55 @@
 # BitcoinConnect
 
-Una biblioteca para conectar carteras de Bitcoin en aplicaciones web.
+A library for connecting Bitcoin wallets in web applications.
 
-## Instalación
+## Installation
 
 ```bash
-npm install bitcoinconnect
+npm install btc-wallet-connect
 ```
 
-## Uso
+## Usage
 
 ### Web Component
 
 ```html
 <script type="module">
-  import 'bitcoinconnect';
+  import 'btc-wallet-connect';
 </script>
 
-<bitcoin-connect button-text="Conectar Wallet" theme="dark"></bitcoin-connect>
+<bitcoin-connect button-text="Connect Wallet" theme="dark"></bitcoin-connect>
 ```
 
 ### JavaScript API
 
 ```javascript
-import { useWallet, walletProviders } from 'bitcoinconnect';
+import { useWallet, walletProviders } from 'btc-wallet-connect';
 
-// Inicializar el gestor de carteras
+// Initialize the wallet manager
 const wallet = useWallet();
 
-// Conectar a una cartera
+// Connect to a wallet
 await wallet.connectWallet('Leather');
 
-// Firmar un mensaje
+// Sign a message
 const signature = await wallet.signMessage('Hello, Bitcoin!');
 ```
 
-### Componente React
+### React Component
 
 ```jsx
 import React from 'react';
-import { BitcoinConnectButton } from 'bitcoinconnect/react';
+import { BitcoinConnectButton } from 'btc-wallet-connect/react';
 
 function App() {
   return (
     <div>
-      <h1>Mi aplicación Bitcoin</h1>
+      <h1>My Bitcoin Application</h1>
       <BitcoinConnectButton 
-        button-text="Conectar Wallet"
+        button-text="Connect Wallet"
         theme="dark"
         onConnect={(provider, address) => {
-          console.log(`Conectado a ${provider} con dirección ${address}`);
+          console.log(`Connected to ${provider} with address ${address}`);
         }}
       />
     </div>
@@ -57,9 +57,9 @@ function App() {
 }
 ```
 
-Para más detalles sobre el componente React, consulta [la documentación de React](./src/react/README.md).
+For more details about the React component, check out [the React documentation](./src/react/README.md).
 
-## Carteras compatibles
+## Compatible Wallets
 
 - Leather
 - OKX
@@ -71,32 +71,32 @@ Para más detalles sobre el componente React, consulta [la documentación de Rea
 ### WalletManager
 
 ```javascript
-import { useWallet } from 'bitcoinconnect';
+import { useWallet } from 'btc-wallet-connect';
 
 const wallet = useWallet();
 
-// Propiedades
-wallet.walletAddress; // Dirección de la cartera conectada
-wallet.publicKey; // Clave pública de la cartera
-wallet.connected; // Estado de conexión
-wallet.walletProvider; // Proveedor de la cartera
+// Properties
+wallet.walletAddress; // Connected wallet address
+wallet.publicKey; // Wallet public key
+wallet.connected; // Connection status
+wallet.walletProvider; // Wallet provider
 
-// Métodos
-await wallet.connectWallet(providerKey); // Conectar a una cartera
-wallet.disconnectWallet(); // Desconectar la cartera
-await wallet.signMessage(message); // Firmar un mensaje
-await wallet.signPSBT(psbt, options); // Firmar un PSBT
-await wallet.pushTX(txHex); // Enviar una transacción
+// Methods
+await wallet.connectWallet(providerKey); // Connect to a wallet
+wallet.disconnectWallet(); // Disconnect the wallet
+await wallet.signMessage(message); // Sign a message
+await wallet.signPSBT(psbt, options); // Sign a PSBT
+await wallet.pushTX(txHex); // Send a transaction
 ```
 
 ### BitcoinConnectButton (Web Component)
 
 ```html
 <bitcoin-connect
-  button-text="Conectar Wallet"
-  connected-text="Wallet Conectada"
-  loading-text="Conectando..."
-  modal-title="Selecciona tu Wallet"
+  button-text="Connect Wallet"
+  connected-text="Wallet Connected"
+  loading-text="Connecting..."
+  modal-title="Select your Wallet"
   theme="dark"
   show-address="true"
   show-provider="true"
@@ -107,32 +107,32 @@ await wallet.pushTX(txHex); // Enviar una transacción
 ></bitcoin-connect>
 ```
 
-## Desarrollo
+## Development
 
 ```bash
-# Instalar dependencias
+# Install dependencies
 npm install
 
-# Ejecutar servidor de desarrollo
+# Run development server
 npm run dev
 
-# Construir para producción
+# Build for production
 npm run build
 ```
 
-## Publicación en npm
+## Publishing to npm
 
 ```bash
-# Asegúrate de tener una cuenta en npm y estar logueado
+# Make sure you have an npm account and are logged in
 npm login
 
-# Construye el paquete
+# Build the package
 npm run build
 
-# Publica el paquete
+# Publish the package
 npm publish
 ```
 
-## Licencia
+## License
 
 MIT

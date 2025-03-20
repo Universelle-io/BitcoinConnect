@@ -140,7 +140,7 @@ const BitcoinConnectButton = forwardRef<BitcoinConnectButtonRef, BitcoinConnectB
     }
 
     // Renderizamos el web component con las propiedades procesadas
-    return React.createElement('bitcoin-connect', {
+    return React.createElement('btc-wallet-connect', {
       ref: elementRef,
       className,
       style,
