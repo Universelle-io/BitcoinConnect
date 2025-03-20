@@ -1,5 +1,5 @@
 {
-  "name": "bitcoinconnect",
+  "name": "btc-wallet-connect",
   "version": "0.1.0",
   "description": "A Bitcoin wallet connection library for web applications",
   "license": "MIT",
