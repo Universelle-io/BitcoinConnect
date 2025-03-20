@@ -1,27 +1,12 @@
 import { Leather } from "./Leather";
 import { OKX } from "./OKX";
+import { Unisat } from "./Unisat";
+import { TapWallet } from "./TapWallet";
 
 
 export const walletProviders = {
     Leather,
-    OKX
+    OKX,
+    TapWallet,
+    Unisat
 }
-
-//export const walletConfig = {
-//    Leather: {
-//        label: "Leather",
-//        icon: "https://openbook.0.srcpad.pro/static/assets/leather.png",
-//    },
-//    OKX: {
-//        label: "OKX",
-//        icon: "https://openbook.0.srcpad.pro/static/assets/okx.png",
-//    },
-//    Unisat: {
-//        label: "Unisat",
-//        icon: "https://openbook.0.srcpad.pro/static/assets/unisat.png"
-//    },
-//    TapWallet: {
-//        label: "TapWallet",
-//        icon: "https://openbook.0.srcpad.pro/static/assets/tapwallet.png"
-//    }
-//}

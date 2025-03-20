@@ -1,14 +1,34 @@
 {
   "name": "bitcoinconnect",
-  "version": "0.0.1",
-  "description": "",
-  "license": "ISC",
-  "author": "",
-  "type": "commonjs",
-  "main": "index.js",
+  "version": "0.1.0",
+  "description": "A Bitcoin wallet connection library for web applications",
+  "license": "MIT",
+  "author": "Universelle",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/types/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "keywords": [
+    "bitcoin",
+    "wallet",
+    "connect",
+    "cryptocurrency",
+    "web3"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Universelle-io/BitcoinConnect"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "vite"
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "@leather-wallet/types": "^0.2.1",
@@ -16,5 +36,18 @@
     "bitcoinsdk": "^0.2.54",
     "nanostores": "^0.11.4",
     "vite": "^6.2.2"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "typescript": "^5.0.0",
+    "vite": "^6.2.2"
+  },
+  "peerDependencies": {
+    "bitcoinsdk": "^0.2.54",
+    "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
   }
 }

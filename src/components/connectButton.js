@@ -1,17 +1,14 @@
-// Importamos el WalletManager existente
 import { useWallet } from '../context/WalletManager.js';
 import { walletProviders } from '../wallets/index.js';
 import { styles } from './styles.js';
+import { btc_logo } from './assets.js';
 
-// Definición del Web Component
 class BitcoinConnectButton extends HTMLElement {
   constructor() {
     super();
 
-    // Crear Shadow DOM para encapsulación
     this.attachShadow({ mode: 'open' });
 
-    // Estado interno
     this.isLoading = false;
 
     try {
@@ -28,11 +25,9 @@ class BitcoinConnectButton extends HTMLElement {
       };
     }
     
-    // Aplicar colores personalizados si se proporcionan
     this.applyCustomColors();
   }
 
-  // Propiedades observadas que permite actualizar el componente cuando cambian
   static get observedAttributes() {
     return [
       'button-text',
@@ -51,7 +46,6 @@ class BitcoinConnectButton extends HTMLElement {
     ];
   }
 
-  // Opciones del componente con defaults
   get options() {
     return {
       buttonText: this.getAttribute('button-text') || 'Connect Wallet',
@@ -64,21 +58,17 @@ class BitcoinConnectButton extends HTMLElement {
     };
   }
 
-  // Ciclo de vida: cuando el componente se agrega al DOM
   connectedCallback() {
     console.log('BitcoinConnectButton connected to DOM');
 
-    // Aseguramos que el render se ejecute después de que el DOM esté completamente cargado
     setTimeout(() => {
       this.render();
       this.updateButtonState();
     }, 0);
   }
 
-  // Ciclo de vida: cuando cambia un atributo observado
   attributeChangedCallback(name, oldValue, newValue) {
     if (oldValue !== newValue) {
-      // Si cambia un color, aplicamos los colores personalizados
       if (name.includes('color') || name.includes('hover') || name.includes('bg')) {
         this.applyCustomColors();
       }
@@ -87,7 +77,6 @@ class BitcoinConnectButton extends HTMLElement {
     }
   }
   
-  // Aplicar colores personalizados desde atributos
   applyCustomColors() {
     const customColors = {
       '--btn-primary-color': this.getAttribute('primary-color'),
@@ -111,16 +100,13 @@ class BitcoinConnectButton extends HTMLElement {
       '--modal-close-hover-color': this.getAttribute('modal-close-hover-color')
     };
     
-    // Aplicar estilos personalizados al elemento host
     this.style.cssText = Object.entries(customColors)
       .filter(([_, value]) => value !== null && value !== undefined)
       .map(([prop, value]) => `${prop}: ${value};`)
       .join(' ');
   }
 
-  // Renderiza el componente en el Shadow DOM
   render() {
-    // Generar opciones de wallet
     let walletOptionsHtml = '';
     for (const [key, config] of Object.entries(walletProviders)) {
       walletOptionsHtml += `
@@ -146,10 +132,9 @@ class BitcoinConnectButton extends HTMLElement {
           <line x1="21" y1="12" x2="9" y2="12"></line>
         </svg>`;
       }
-      return `<span class="bitcoin-connect-icon">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-          <path d="M23.638 14.904c-1.602 6.425-8.113 10.323-14.542 8.725C2.67 22.027-1.244 15.525.362 9.105 1.962 2.675 8.475-1.22 14.9.377c6.444 1.596 10.36 8.095 8.738 14.527zm-5.6-3.095l-1.286-.322c.057-.18.11-.366.154-.555.248-1.046.165-1.865-.246-2.437-.407-.563-1.17-.853-2.28-.865v-2.07l-1.414.344v1.738c-.36.002-.725.018-1.094.044v-1.785l-1.414.343v2.07c-.306.027-.614.057-.92.088l.002-.005-1.952.475.39 1.484c.702-.173.83-.204.83-.204.39-.095.62.147.636.273v2.202c.05-.012.12-.02.204-.02l-.205.047v3.08c-.034.182-.2.398-.532.306 0 0-.127-.037-.83-.21l-.83 1.624 1.842.456c.343.087.677.165 1.003.243v2.092l1.415-.343v-1.93c.372.026.744.044 1.094.044v1.896l1.414-.342v-2.124c2.28-.433 3.843-1.426 4.147-3.477.244-1.65-.08-2.587-1.02-3.204.796-.182 1.405-.687 1.568-1.74zm-2.776 3.775c-.38 1.617-2.966 1.122-3.808 1.003l.68-2.763c.84.12 3.547.357 3.128 1.76zm.38-4.18c-.34 1.483-2.493 1.03-3.19.93l.616-2.498c.696.1 2.948.285 2.574 1.568z"/>
-        </svg>
+      return `
+      <span class="bitcoin-connect-icon" style="width: 24px; height: 24px;">
+        ${btc_logo}  
       </span>
       ${this.options.buttonText}`;
     };
@@ -160,10 +145,8 @@ class BitcoinConnectButton extends HTMLElement {
       <div class="${this.options.theme === 'dark' ? 'theme-dark' : ''} wallet-container">
         ${this.walletManager.connected ? `
           <div class="wallet-info">
-            <span class="wallet-icon">
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-                <path d="M23.638 14.904c-1.602 6.425-8.113 10.323-14.542 8.725C2.67 22.027-1.244 15.525.362 9.105 1.962 2.675 8.475-1.22 14.9.377c6.444 1.596 10.36 8.095 8.738 14.527zm-5.6-3.095l-1.286-.322c.057-.18.11-.366.154-.555.248-1.046.165-1.865-.246-2.437-.407-.563-1.17-.853-2.28-.865v-2.07l-1.414.344v1.738c-.36.002-.725.018-1.094.044v-1.785l-1.414.343v2.07c-.306.027-.614.057-.92.088l.002-.005-1.952.475.39 1.484c.702-.173.83-.204.83-.204.39-.095.62.147.636.273v2.202c.05-.012.12-.02.204-.02l-.205.047v3.08c-.034.182-.2.398-.532.306 0 0-.127-.037-.83-.21l-.83 1.624 1.842.456c.343.087.677.165 1.003.243v2.092l1.415-.343v-1.93c.372.026.744.044 1.094.044v1.896l1.414-.342v-2.124c2.28-.433 3.843-1.426 4.147-3.477.244-1.65-.08-2.587-1.02-3.204.796-.182 1.405-.687 1.568-1.74zm-2.776 3.775c-.38 1.617-2.966 1.122-3.808 1.003l.68-2.763c.84.12 3.547.357 3.128 1.76zm.38-4.18c-.34 1.483-2.493 1.03-3.19.93l.616-2.498c.696.1 2.948.285 2.574 1.568z"/>
-              </svg>
+            <span class="wallet-icon" style="width: 24px; height: 24px;">
+            ${btc_logo}
             </span>
             <span class="wallet-address">${walletAddressDisplay}</span>
           </div>
@@ -314,5 +297,7 @@ class BitcoinConnectButton extends HTMLElement {
   }
 }
 
-customElements.define('bitcoin-connect', BitcoinConnectButton);
+if (typeof window !== 'undefined' && !customElements.get('bitcoin-connect')) {
+  customElements.define('bitcoin-connect', BitcoinConnectButton);
+}
 export default BitcoinConnectButton;

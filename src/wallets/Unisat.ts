@@ -63,3 +63,5 @@ class UnisatWallet {
     return await bitcoinsdk.bitcoin.sendRawTransaction({ txHex });
   };
 }
+
+export const Unisat = new UnisatWallet();
