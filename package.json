@@ -1,6 +1,6 @@
 {
   "name": "btc-wallet-connect",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A Bitcoin wallet connection library for web applications",
   "license": "MIT",
   "author": "Universelle",
