@@ -2538,7 +2538,7 @@ let Xt = class extends HTMLElement {
     return this.walletManager;
   }
 };
-typeof window < "u" && !customElements.get("bitcoin-connect") && customElements.define("bitcoin-connect", Xt);
+typeof window < "u" && !customElements.get("btc-wallet-connect") && customElements.define("btc-wallet-connect", Xt);
 const Jn = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: Xt
@@ -3949,7 +3949,7 @@ const nr = /* @__PURE__ */ vn(de), rr = () => {
     const { className: o, style: f, onConnect: h, onDisconnect: l, ...m } = n, E = {};
     for (const [c, d] of Object.entries(m))
       typeof d == "boolean" ? E[c] = d ? "true" : "false" : d != null && (E[c] = String(d));
-    return nr.createElement("bitcoin-connect", {
+    return nr.createElement("btc-wallet-connect", {
       ref: r,
       className: o,
       style: f,
